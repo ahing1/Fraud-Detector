@@ -6,9 +6,9 @@ const router = Router();
 router.get('/', async (req, res) => {
     try {
         const users = await getUsers();
-        res.json(users);
+        return res.json(users);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        return res.status(500).json({ error: error.message });
     }
 });
 
@@ -16,9 +16,9 @@ router.post('/', async (req, res) => {
     try {
         const { userId, name, email, accountAge } = req.body;
         const newUser = await addUser({ userId, name, email, accountAge });
-        res.json(newUser);
+        return res.json(newUser);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        return res.status(500).json({ error: error.message });
     }
 });
 
