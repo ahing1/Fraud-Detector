@@ -1,4 +1,4 @@
-import { transaction } from "../models/Transaction.js";
+import { transaction } from "../schemas/Transaction.js";
 
 export const getTransactions = async () => {
     const transactions = await transaction.find({});
