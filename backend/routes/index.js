@@ -1,5 +1,6 @@
 import transactionRoutes from './transaction.js';
 import userRoutes from './user.js';
+import predictionRoutes from './predictions.js';
 
 const constructorMethod = (app) => {
     app.get('/', (req, res) => {
@@ -7,6 +8,7 @@ const constructorMethod = (app) => {
     });
     app.use('/users', userRoutes);
     app.use('/transactions', transactionRoutes);
+    app.use('/api/predictions', predictionRoutes);
     
     app.use('*', (_, res) => {
         res.status(404).json({ error: 'Not found- check your URL' });
