@@ -6,8 +6,8 @@ const constructorMethod = (app) => {
     app.get('/', (req, res) => {
         res.redirect('/'); 
     });
-    app.use('/users', userRoutes);
-    app.use('/transactions', transactionRoutes);
+    app.use('/api/users', userRoutes);
+    app.use('/api/transactions', transactionRoutes);
     app.use('/api/predictions', predictionRoutes);
     
     app.use('*', (_, res) => {

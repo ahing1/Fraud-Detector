@@ -4,7 +4,7 @@ const userSchema = new mongoose.Schema({
     name: {type: String, required: [true, "Name is required"]},
     email: {type: String, required: [true, "Email is required"], unique: true, match: [/.+@.+\..+/, 'Please enter a valid email address']},
     accountAge: {type: Number, required: [true, "Account Age is required"]},
-    isVerified: {type: Boolean, default: false},
+    isVerified: {type: Boolean, required: [true, "Verification status is required"]},
     totalTransactionAmount: {type: Number, default: 0},
     transactions : [{type: mongoose.Schema.Types.ObjectId, ref: "Transaction"}]
 })

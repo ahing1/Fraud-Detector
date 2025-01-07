@@ -60,12 +60,12 @@ export const getTransactionsByUserId = async (userId) => {
             throw new Error("Invalid User ID");
     }
 
-    const user = await user.findOne({ userId });
-    if (!user) {
+    const userRecord = await user.findOne({ _id: userId }).populate('transactions');
+    if (!userRecord) {
         throw new Error("User does not exist");
     }
 
-    return user.transactions;
+    return userRecord.transactions;
 }
 
 

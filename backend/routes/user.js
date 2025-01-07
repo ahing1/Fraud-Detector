@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { addUser, getUsers } from '../data/user.js';
+import { addUser, getUsers, getTransactionsByUserId } from '../data/user.js';
 
 const router = Router();
 
@@ -14,14 +14,23 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const { name, email, accountAge } = req.body;
-        const newUser = await addUser({ name, email, accountAge });
+        const { name, email, accountAge, isVerified } = req.body;
+        const newUser = await addUser({ name, email, accountAge, isVerified });
         return res.json(newUser);
+    } catch (error) {
+        return res.status(400).json({ error: error.message });
+    }
+});
+
+router.get('/:id/transactions', async (req, res) => { // This route is used to get all transactions for a specific user
+    try {
+        const userId = req.params.id;
+        const transactions = await getTransactionsByUserId(userId);
+        return res.json(transactions);
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }
 });
-
 
 
 export default router;
