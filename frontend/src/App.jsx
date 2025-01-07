@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import instance from './api/axios.js'
 
@@ -49,14 +47,16 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null)
+    setLoading(true)
     try{
-      console.log("formData: ", formData)
       const response = await instance.post('/predictions', formData);
-      console.log("response: ", response)
       setPrediction(response.data.prediction)
     }
     catch (error){
       setError(error.response?.data?.error)
+    }
+    finally{
+      setLoading(false)
     }
   }
 
@@ -64,6 +64,7 @@ function App() {
     <>
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-6">
             <h1 className="text-3xl font-bold mb-6 text-blue-600">Fraud Detection</h1>
+            {loading && ( <p className="text-center">Loading...</p>)}
             <form
                 onSubmit={handleSubmit}
                 className="bg-white shadow-md rounded px-8 pt-6 pb-8 w-full max-w-md"

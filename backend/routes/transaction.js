@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getTransactions, addTransaction } from '../data/transaction.js';
+import { getTransactions, createTransaction } from '../data/transaction.js';
 
 const router = Router();
 
@@ -14,8 +14,8 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const { transactionId, userId, amount, location, device, ipAddress } = req.body;
-        const newTransaction = await addTransaction({ transactionId, userId, amount, location, device, ipAddress });
+        const { userId, amount } = req.body;
+        const newTransaction = await createTransaction({ userId, amount });
         return res.json(newTransaction);
     } catch (error) {
         return res.status(500).json({ error: error.message });

@@ -14,12 +14,14 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const { userId, name, email, accountAge } = req.body;
-        const newUser = await addUser({ userId, name, email, accountAge });
+        const { name, email, accountAge } = req.body;
+        const newUser = await addUser({ name, email, accountAge });
         return res.json(newUser);
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }
 });
+
+
 
 export default router;
