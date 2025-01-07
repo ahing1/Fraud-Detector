@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { addUser, getUsers, getTransactionsByUserId } from '../data/user.js';
+import { addUser, getUsers, getTransactionsByUserId, getUserById } from '../data/user.js';
 
 const router = Router();
 
@@ -17,6 +17,16 @@ router.post('/', async (req, res) => {
         const { name, email, accountAge, isVerified } = req.body;
         const newUser = await addUser({ name, email, accountAge, isVerified });
         return res.json(newUser);
+    } catch (error) {
+        return res.status(400).json({ error: error.message });
+    }
+});
+
+router.get('/:id', async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const user = await getUserById(userId);
+        return res.json(user);
     } catch (error) {
         return res.status(400).json({ error: error.message });
     }
