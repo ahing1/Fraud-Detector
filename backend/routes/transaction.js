@@ -14,8 +14,8 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const { userId, amount } = req.body;
-        const newTransaction = await createTransaction({ userId, amount });
+        const { userId, amount, isFraud } = req.body;
+        const newTransaction = await createTransaction({ userId, amount, isFraud });
         return res.json(newTransaction);
     } catch (error) {
         return res.status(400).json({ error: error.message });
