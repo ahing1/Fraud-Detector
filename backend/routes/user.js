@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { addUser, getUsers, getTransactionsByUserId, getUserById } from '../data/user.js';
+import { user } from '../schemas/User.js';
 
 const router = Router();
 
@@ -24,11 +25,13 @@ router.post('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     try {
-        const userId = req.params.id;
-        const user = await getUserById(userId);
-        return res.json(user);
+        const userRecord = await user.findOne({ userId: req.params.userId }).populate('transactions');
+        if (!userRecord) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        return res.json(userRecord);
     } catch (error) {
-        return res.status(400).json({ error: error.message });
+        return res.status(500).json({ error: error.message });
     }
 });
 

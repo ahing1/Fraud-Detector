@@ -3,9 +3,14 @@ import joblib
 import pandas as pd
 from flask_cors import CORS
 import logging
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 app = Flask(__name__) # create a Flask app; __name__: Refers to the current Python module. Flask uses this to determine the root path of your application.
 
+flask_port = os.getenv("FLASK_PORT")
 CORS(app)
 logging.basicConfig(level=logging.INFO)
 
@@ -39,4 +44,4 @@ def internal_error(e):
     return jsonify({'error': 'An internal server error occurred'}), 500
 
 if __name__ == '__main__':
-    app.run(port=8000, debug=True)
+    app.run(port=flask_port, debug=True)
