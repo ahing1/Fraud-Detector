@@ -6,7 +6,7 @@ const router = Router();
 router.post('/', async (req, res) => {
     try{
         //input validation
-        if(!req.body && Object.keys(req.body).length !== 30){
+        if(!req.body || Object.keys(req.body).length !== 32){
             return res.status(400).json({ error: 'Invalid input. Please provide all features.' });
         }
 

@@ -24,8 +24,9 @@ def predict():
         df = pd.DataFrame([data])# convert json to dataframe for model input; input format for most ML models
        
         # Scale the Amount column
-        df['scaled_amount'] = scaler.transform(df[['Amount']])
-        df.drop('Amount', axis=1, inplace=True)  # Drop the original Amount column
+        df[['scaled_amount', 'scaled_accountAge']] = scaler.transform(df[['Amount', 'accountAge']])
+        df.drop(['Amount', 'accountAge'], axis=1, inplace=True)  # Drop the original Amount column
+           
         prediction = model.predict(df)[0] # make prediction
         return jsonify({'prediction': int(prediction)}) # return prediction as json
 
@@ -38,4 +39,4 @@ def internal_error(e):
     return jsonify({'error': 'An internal server error occurred'}), 500
 
 if __name__ == '__main__':
-    app.run(port=8000, debug=True), 500
+    app.run(port=8000, debug=True)
