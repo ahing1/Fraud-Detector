@@ -53,16 +53,28 @@ function UserDashboard() {
                 </tr>
             </thead>
             <tbody>
-                {user.transactions.map(transaction => (
-                    <tr key={transaction._id} className="text-center">
-                        <td className="border border-gray-300 px-4 py-2">{transaction._id}</td>
-                        <td className="border border-gray-300 px-4 py-2">${transaction.amount.toFixed(2)}</td>
-                        <td className="border border-gray-300 px-4 py-2">{new Date(transaction.timestamp).toLocaleString()}</td>
-                        <td className={`border border-gray-300 px-4 py-2 ${transaction.isFraud ? 'text-red-500' : 'text-green-500'}`}>
-                            {transaction.isFraud ? 'Fraudulent' : 'Legitimate'}
-                        </td>
-                    </tr>
-                ))}
+            {user.transactions.length > 0 ? (
+        user.transactions.map((transaction) => (
+            <tr key={transaction._id} className="text-center">
+                <td className="border border-gray-300 px-4 py-2">{transaction._id}</td>
+                <td className="border border-gray-300 px-4 py-2">${transaction.amount.toFixed(2)}</td>
+                <td className="border border-gray-300 px-4 py-2">{new Date(transaction.timestamp).toLocaleString()}</td>
+                <td
+                    className={`border border-gray-300 px-4 py-2 ${
+                        transaction.isFraud ? 'text-red-500' : 'text-green-500'
+                    }`}
+                >
+                    {transaction.isFraud ? 'Fraudulent' : 'Legitimate'}
+                </td>
+            </tr>
+        ))
+    ) : (
+        <tr>
+            <td colSpan="4" className="text-center border border-gray-300 px-4 py-2">
+                No transactions available.
+            </td>
+        </tr>
+    )}
             </tbody>
         </table>
     </div>

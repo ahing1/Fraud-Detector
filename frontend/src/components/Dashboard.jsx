@@ -71,6 +71,7 @@ function Dashboard() {
   return (
     <div className="p-6 max-w-4xl mx-auto">
         <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
+        <p className='text-xs'>Shows all transactions in the database</p>
         <div className="mb-6">
             <h2 className="text-xl font-semibold mb-2">Transaction Breakdown</h2>
             <Pie data={pieData} />

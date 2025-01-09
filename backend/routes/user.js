@@ -15,8 +15,8 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const { name, email, accountAge, isVerified } = req.body;
-        const newUser = await addUser({ name, email, accountAge, isVerified });
+        const { name, email, isVerified } = req.body;
+        const newUser = await addUser({ name, email, isVerified });
         return res.json(newUser);
     } catch (error) {
         return res.status(400).json({ error: error.message });
@@ -25,7 +25,7 @@ router.post('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     try {
-        const userRecord = await user.findOne({ userId: req.params.userId }).populate('transactions');
+        const userRecord = await user.findOne({ userId: req.params.userId }).populate('transactions').lean({ virtuals: true});
         if (!userRecord) {
             return res.status(404).json({ error: 'User not found' });
         }
