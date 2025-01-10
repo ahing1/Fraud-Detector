@@ -14,8 +14,9 @@ function SignUpForm() {
         e.preventDefault()
         try {
             const response = await instance.post('/auth/signup', { name, email, password })
-            const { userId } = response.data.userId
+            const { userId } = response.data
             setError(null)
+            localStorage.setItem('userId', userId);
             navigate('/dashboard')
         } catch (error) {
             console.error(error)

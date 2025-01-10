@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import instance from '../api/axios.js'
+import { useNavigate } from 'react-router-dom'
 
 function UserDashboard() {
 
-    const { userId } = useParams();
+    const userId = localStorage.getItem('userId');
     const [user, setUser] = useState(null);
+    const [transactions, setTransactions] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     const fetchUser = async () => {
         try {
@@ -20,8 +23,23 @@ function UserDashboard() {
         }
     }
 
+    const fetchUserTransactions = async () => {
+        try {
+            const response = await instance.get(`/users/${userId}/transactions`);
+            setTransactions(response.data);
+        } catch (error) {
+            setError(error);
+        }
+    }
+
+    const handleSignOut = () => {
+        localStorage.clear();
+        navigate('/');
+    };
+
     useEffect(() => {
         fetchUser();
+        fetchUserTransactions();
     }, [userId]);
 
     if (loading) {
@@ -37,6 +55,12 @@ function UserDashboard() {
   return (
     <div className="p-6 max-w-4xl mx-auto">
         <h1 className="text-2xl font-bold mb-4">{user.name}'s Dashboard</h1>
+        <button
+            onClick={handleSignOut}
+            className="bg-red-500 text-white px-4 py-2 rounded shadow hover:bg-red-600"
+        >
+            Sign Out
+        </button>
         <p>Email: {user.email}</p>
         <p>Account Age: {user.accountAge} days</p>
         <p>Verified: {user.isVerified ? 'Yes' : 'No'}</p>
@@ -53,8 +77,8 @@ function UserDashboard() {
                 </tr>
             </thead>
             <tbody>
-            {user.transactions.length > 0 ? (
-        user.transactions.map((transaction) => (
+            {transactions.length > 0 ? (
+        transactions.map((transaction) => (
             <tr key={transaction._id} className="text-center">
                 <td className="border border-gray-300 px-4 py-2">{transaction._id}</td>
                 <td className="border border-gray-300 px-4 py-2">${transaction.amount.toFixed(2)}</td>

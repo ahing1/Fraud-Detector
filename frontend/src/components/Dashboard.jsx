@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import instance from '../api/axios'
+import { useNavigate } from 'react-router-dom'
 import {
     Chart as ChartJS,
     ArcElement,
@@ -18,6 +19,7 @@ function Dashboard() {
     const [analytics, setAnalytics] = useState({})
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
+    const navigate = useNavigate()
 
     const fetchAnalytics = async () => {
         try{
@@ -36,6 +38,10 @@ function Dashboard() {
     useEffect(() => {
         fetchAnalytics()
     }, [])
+
+    const handleCreateTransaction = () => {
+        navigate('/create-transaction'); // Redirect to the Create Transaction page
+    };
 
     if (loading){
         return <div>Loading...</div>
@@ -72,6 +78,12 @@ function Dashboard() {
     <div className="p-6 max-w-4xl mx-auto">
         <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
         <p className='text-xs'>Shows all transactions in the database</p>
+        <button
+            onClick={handleCreateTransaction}
+            className="bg-green-500 text-white px-4 py-2 rounded shadow hover:bg-green-600 mb-6"
+        >
+            Create Transaction
+        </button>
         <div className="mb-6">
             <h2 className="text-xl font-semibold mb-2">Transaction Breakdown</h2>
             <Pie data={pieData} />

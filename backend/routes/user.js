@@ -25,7 +25,7 @@ router.post('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     try {
-        const userRecord = await user.findOne({ userId: req.params.userId }).populate('transactions').lean({ virtuals: true});
+        const userRecord = await getUserById(req.params.id);
         if (!userRecord) {
             return res.status(404).json({ error: 'User not found' });
         }
