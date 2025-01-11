@@ -3,7 +3,9 @@ import cors from 'cors'
 import constructorMethod from './routes/index.js';
 import { connectDB } from './config/db.js';
 import morgan from 'morgan';
+import dotenv from 'dotenv';
 
+dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -14,8 +16,10 @@ app.use(morgan('dev'));
 connectDB();
 
 constructorMethod(app);
-app.listen(PORT, () => {
-    console.log('Your routes will be running on http://localhost:3000');
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => {
+    console.log(`Your routes will be running on http://localhost:${PORT}`);
   });
+}
 
 export default app;

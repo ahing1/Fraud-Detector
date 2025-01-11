@@ -17,18 +17,19 @@ userSchema.virtual('accountAge').get(function () {
     return ageInDays;
 });
 
-userSchema.pre('save', async function (next) {
+userSchema.pre('save', async function (next) { // Hash password before saving
     if (!this.isModified('password')) {
-        return next(); // Skip hashing if the password hasn't been modified
+        next(); // Skip hashing if the password hasn't been modified
     }
+
 
     try{
         const salt = await bcrypt.genSalt(10);
         this.password = await bcrypt.hash(this.password, salt);
-        return next();
+        next();
     }
     catch (error) {
-        return next(error);
+        next(error);
     }
 });
 

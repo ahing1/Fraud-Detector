@@ -12,7 +12,7 @@ router.post('/signup', async (req, res) => {
         if (!newUser) {
             return res.status(400).json({ error: "User could not be created" });
         }
-        return res.status(201).json({ message: "User created successfully", userId: newUser._id });
+        return res.status(200).json({ message: "User created successfully", userId: newUser._id });
 
     } catch (error) {
         return res.status(400).json({ error: error.message });

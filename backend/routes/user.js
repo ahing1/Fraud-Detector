@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import { addUser, getUsers, getTransactionsByUserId, getUserById } from '../data/user.js';
-import { user } from '../schemas/User.js';
 
 const router = Router();
 
@@ -15,8 +14,8 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const { name, email, isVerified } = req.body;
-        const newUser = await addUser({ name, email, isVerified });
+        const { name, email, password, isVerified } = req.body;
+        const newUser = await addUser({ name, email, password, isVerified });
         return res.json(newUser);
     } catch (error) {
         return res.status(400).json({ error: error.message });
