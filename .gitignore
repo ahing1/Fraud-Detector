@@ -7,3 +7,5 @@
 **/venv
 *.csv
 **/p
+**/__pycache__/
+*.pem
