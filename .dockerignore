@@ -1,0 +1,29 @@
+# Ignore node_modules across the project
+node_modules/
+
+# Ignore Python bytecode and cache directories
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore virtual environment directories
+venv/
+env/
+
+# Ignore environment files
+.env
+
+# Ignore editor/IDE-specific files
+.vscode/
+.idea/
+.git/
+
+# Ignore logs and temporary files
+*.log
+*.tmp
+
+# Ignore Docker-related files not needed in the build context
+.dockerignore
+Dockerfile*
+
+ml-model/data/

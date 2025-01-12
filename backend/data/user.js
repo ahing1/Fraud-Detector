@@ -37,21 +37,6 @@ export const getUserById = async (id) => {
     return existingUser
 }
 
-
-export const getUserByEmail = async (email) => {
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email || !emailRegex.test(email)) {
-        throw new Error('Invalid email format');
-    }
-
-    const existingUser = await user.findOne({ email: email });
-    if (!existingUser) {
-        throw new Error("User does not exist");
-    }
-    return existingUser
-}
-
 export const getTransactionsByUserId = async (userId) => {
 
     // get all transactions for a user

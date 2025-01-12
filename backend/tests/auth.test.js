@@ -24,6 +24,7 @@ describe('Auth Routes', () => {
     });
 
     afterAll(async () => {
+        await user.deleteMany();
         await mongoose.connection.close();
     });
 
