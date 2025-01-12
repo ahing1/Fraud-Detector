@@ -1,7 +1,7 @@
 import request from 'supertest';
 import app from '../server.js';
 import { user } from '../schemas/User.js';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
