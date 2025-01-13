@@ -10,14 +10,17 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const PORT = process.env.PORT || 3000;
-app.use(cors());
+app.use(cors({
+  origin: '*', // Allow all origins for now; restrict in production
+  credentials: true,
+}));
 app.use(morgan('dev'));
 
 connectDB();
 
 constructorMethod(app);
 if (process.env.NODE_ENV !== 'test') {
-  app.listen(PORT, () => {
+  app.listen(PORT, '0.0.0.0', () => {
     console.log(`Your routes will be running on http://localhost:${PORT}`);
   });
 }
